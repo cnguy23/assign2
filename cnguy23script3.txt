@@ -1,0 +1,31 @@
+USE cnguy23assign2db;
+-- Query 1
+SELECT description FROM product;
+-- Query 2
+SELECT DISTINCT city FROM customer;
+-- Query 3
+SELECT * FROM agent ORDER BY cityworkingout;
+-- Query 4
+SELECT firstname,lastname FROM customer WHERE city = 'Springfield';
+-- Query 5
+SELECT lastname FROM customer WHERE agentid IN (SELECT agentid FROM agent WHERE firstname = 'Regis');
+-- Query 6
+SELECT description FROM product WHERE description LIKE '%pad%';
+-- Query 7
+SELECT lastname, description, quantity FROM customer, purchase, product WHERE customer.customerid = purchase.customerid and product.productid = purchase.productid;
+-- Query 8
+SELECT COUNT(*) AS "Homer's Total Purchases" FROM purchase WHERE customerid IN (SELECT customerid FROM customer WHERE firstname = 'Homer');
+-- Query 9
+SELECT firstname, lastname, COUNT(*) FROM customer, purchase WHERE customer.customerid = purchase.customerid GROUP BY purchase.customerid;
+-- Query 10
+SELECT description, quantityitems FROM product WHERE productid NOT IN (SELECT productid FROM purchase);
+-- Query 11
+SELECT description, quantityitems FROM product WHERE productid NOT IN (SELECT productid FROM purchase WHERE customerid IN (SELECT customerid FROM customer WHERE firstname = 'Fred' and lastname = 'Flintstone'));
+-- Query 12
+SELECT agent.firstname, agent.lastname, customer.firstname,customer.lastname FROM agent, customer WHERE cityworkingout = city and agent.agentid = customer.agentid;
+-- Query 13
+SELECT SUM(quantity) AS 'PURCHASED KNEEPADS!!!' FROM purchase WHERE productid IN (SELECT productid FROM product WHERE description = 'Knee Pads'); 
+-- Query 14
+SELECT description FROM product WHERE productid IN (SELECT productid FROM purchase GROUP BY productid HAVING COUNT(*) > 3);
+-- Query 15
+SELECT agent.firstname, agent.lastname FROM agent,customer,purchase,product WHERE agent.agentid = customer.agentid and customer.customerid = purchase.customerid and product.productid = purchase.productid and description = 'Knee Pads';

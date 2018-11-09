@@ -1,0 +1,18 @@
+USE cnguy23assign2db;
+
+SELECT * FROM customer;
+SELECT * FROM agent;
+SELECT * FROM product;
+SELECT * FROM purchase;
+
+DROP VIEW IF EXISTS peopleproducts;
+CREATE VIEW peopleproducts AS SELECT firstname, lastname, description, quantity, costper, (quantity*costper) FROM customer, purchase, product WHERE customer.customerid = purchase.customerid and product.productid = purchase.productid ORDER BY lastname;  
+SELECT * FROM peopleproducts;
+
+SELECT * FROM peopleproducts WHERE (quantity*costper) > 100;
+
+DELETE FROM product WHERE description = 'Eggs';
+SELECT * FROM product;
+
+DELETE FROM agent WHERE cityworkingout = 'Springfield';
+-- Hugh was not deletedeven though he is from springfield because his agentidis used int the purchase table. mysql does not allow a rowto be deleted if it is a foreign key in another table
